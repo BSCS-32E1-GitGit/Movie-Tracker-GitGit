@@ -1,0 +1,178 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set body background color similar to Netflix */
+body {
+    background-color: #141414;
+    font-family: 'Netflix Sans', Arial, sans-serif;
+    position: relative; /* Set the body to relative positioning to contain the absolute positioned search bar */
+}
+
+/* Styling for search bar */
+.search-bar {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 60px; /* Adjust the right property to move the search bar to the right */
+}
+
+    .search-bar input[type="text"] {
+        width: 300px;
+        padding: 10px;
+        border-radius: 20px;
+        border: none;
+        background-color: #333;
+        color: #fff;
+        outline: none;
+    }
+
+    .search-bar button {
+        background-color: #e50914;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .search-bar button:hover {
+            background-color: #ff0000;
+        }
+
+/* Styling for hero section */
+.hero {
+    text-align: center;
+    margin-top: 50px;
+}
+
+    .hero h1 {
+        color: #fff;
+        font-size: 50px;
+        font-weight: bold;
+    }
+
+/* Styling for features section */
+.features {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.feature {
+    margin: 20px;
+    text-align: center;
+}
+
+    .feature img {
+        width: 200px;
+        transition: transform 0.3s ease;
+        background-color: transparent; /* Added to make image background transparent */
+    }
+
+        .feature img:hover {
+            transform: scale(1.1);
+        }
+
+.moviename {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.details {
+    color: #fff;
+    display: none;
+    margin-top: 10px;
+}
+
+.markedbtn {
+    background-color: transparent;
+    border: 1px solid #e50914;
+    color: #e50914;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .markedbtn:hover {
+        background-color: #e50914;
+        color: #fff;
+    }
+
+.treebtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+    .treebtn button {
+        background-color: #e50914;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 10px;
+    }
+
+        .treebtn button:hover {
+            background-color: #b2070f;
+        }
+
+ 
+
+    /* Style for icons */
+    .treebtn button i {
+        margin-right: 5px;
+    }
+
+
+.watched-movie-row {
+    display: inline-block;
+    margin-right: 30px; /* Adjust margin as needed */
+}
+
+.Towatched-movie-row {
+    display: inline-block;
+    margin-right: 30px; /* Adjust margin as needed */
+}
+
+#watchedPanel {
+    background: linear-gradient(to bottom, #333333, #000000);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    position: absolute;
+    top: 25%;
+    width: 80%;
+    height: 100%;
+    left: 10%;
+    padding: 20px;
+    overflow-y: auto; /* Add scrollbar if content exceeds height */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#TowatchedPanel {
+    background: linear-gradient(to bottom, #333333, #000000);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    position: absolute;
+    top: 25%;
+    width: 80%;
+    height: 100%;
+    left: 10%;
+    padding: 20px;
+    overflow-y: auto; /* Add scrollbar if content exceeds height */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}

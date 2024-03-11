@@ -1,9 +1,256 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/css/main.css" rel="stylesheet" />
 
-<div class="text-center">
-    <h1 class="LEADER JONAS</h1>
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</head>
+<body>
+
+    <section class="search-bar">
+        <form id="searchForm" onsubmit="return searchMovie()">
+            <input id="searchInput" type="text" name="q" placeholder="Search..." />
+            <button type="submit">Search</button>
+            <p id="searchMessage" style="color: red; display: none;">Movie not found!</p>
+        </form>
+    </section>
+
+    <section class="hero">
+        <h1>CINEMA</h1>
+    </section>
+    <section class="treebtn">
+        <button class="markwatch">Watched</button>
+        <button class="marktowatch">To Watch</button>
+        <button class="new">New Release</button>
+    </section>
+
+    <section class="features">
+        <div class="feature" id="movie1">
+            <button onclick="toggleDetails('movie1')">
+                <img src="~/image/kdrama1.jpg" alt="Start Up">
+            </button>
+            <p class="moviename">Start Up</p>
+            <div class="details" id="movie1-details">
+                <button class="markedbtn" onclick="markAsWatched('movie1')">Watched</button>
+                <button class="markedbtn" onclick="markAsToWatch('movie1')">To Watch</button>
+                <p style="margin-top: 20px;">Start Up Details</p>
+                <!-- New buttons for Watched and To Watch -->
+
+            </div>
+        </div>
+        <div class="feature" id="movie2">
+            <button onclick="toggleDetails('movie2')">
+                <img src="~/image/kdrama2.jpg" alt="Sweet Home 2">
+            </button>
+            <p class="moviename">Sweet Home 2</p>
+            <div class="details" id="movie2-details">
+                <button class="markedbtn" onclick="markAsWatched('movie2')">Watched</button>
+                <button class="markedbtn" onclick="markAsToWatch('movie2')">To Watch</button>
+                <p style="margin-top: 20px;">Sweet Home 2 Details</p>
+                <!-- New buttons for Watched and To Watch -->
+
+            </div>
+        </div>
+        <div class="feature" id="movie3">
+            <button onclick="toggleDetails('movie3')">
+                <img src="~/image/kdrama3.jpg" alt="Backstreet Rookie">
+            </button>
+            <p class="moviename">Backstreet Rookie</p>
+            <div class="details" id="movie3-details">
+                <button class="markedbtn" onclick="markAsWatched('movie3')">Watched</button>
+                <button class="markedbtn" onclick="markAsToWatch('movie3')">To Watch</button>
+                <p style="margin-top: 20px;">TEST</p>
+                <!-- New buttons for Watched and To Watch -->
+
+            </div>
+        </div>
+        <!-- Add more movie items as needed -->
+    </section>
+
+    <div id="watchedPanel" style="display: none;">
+        <h2 style="color: white;">Watched Movies</h2>
+        <div id="watchedList"></div>
+    </div>
+
+    <div id="TowatchedPanel" style="display: none;">
+        <h2 style="color: white;>ToWatch Movies</h2>
+        <div id="TowatchedList"></div>
+    </div>
+    
+
+  <script>
+    // Add an event listener to the "TEST" button
+    document.querySelector('.markwatch').addEventListener('click', toggleWatchedPanel);
+
+    function toggleWatchedPanel() {
+        var watchedPanel = document.getElementById('watchedPanel');
+        if (watchedPanel.style.display === 'block') {
+            watchedPanel.style.display = 'none';
+        } else {
+            displayWatchedMovies();
+        }
+    }
+
+        document.querySelector('.marktowatch').addEventListener('click', toggleToWatchedPanel);
+
+        function toggleToWatchedPanel() {
+            var TowatchedPanel = document.getElementById('TowatchedPanel');
+            if (TowatchedPanel.style.display === 'block') {
+                TowatchedPanel.style.display = 'none';
+            } else {
+                displayToWatchedMovies();
+            }
+        }
+
+
+        function displayWatchedMovies() {
+            var features = document.querySelectorAll('.feature');
+            var watchedList = document.getElementById('watchedList');
+
+            // Clear the previous list of watched movies
+            watchedList.innerHTML = '';
+
+            features.forEach(function (feature) {
+                // Check if the movie is marked as watched
+                var details = feature.querySelector('.details');
+                if (details.classList.contains('watched')) {
+                    // Extract image and title elements
+                    var img = feature.querySelector('img');
+                    var title = feature.querySelector('.moviename').textContent;
+
+                    // Create a new container div for each watched movie
+                    var watchedMovieRow = document.createElement('div');
+                    watchedMovieRow.classList.add('watched-movie-row');
+
+                    // Append image and title elements to the row
+                    var clonedImg = img.cloneNode(true);
+                    clonedImg.style.width = '200px'; // Apply the width specified in CSS
+                    clonedImg.style.borderRadius = '10px'; // Add border-radius
+                    watchedMovieRow.appendChild(clonedImg);
+
+                    // Create and style the movie name element
+                    var movieName = document.createElement('p');
+                    movieName.textContent = title;
+                    movieName.style.color = 'white'; // Set color to white
+                    movieName.style.textAlign = 'center'; // Align center
+                    movieName.style.fontSize = '16px'; // Adjust font size
+                    movieName.style.fontFamily = 'Arial, sans-serif'; // Adjust font family
+                    movieName.style.marginTop = '10px'; // Add margin-top
+                    watchedMovieRow.appendChild(movieName);
+                    watchedList.appendChild(watchedMovieRow);
+                }
+            });
+
+            // Show the watched panel
+            document.getElementById('watchedPanel').style.display = 'block';
+        }
+
+        function displayToWatchedMovies() {
+            var features = document.querySelectorAll('.feature');
+            var TowatchedList = document.getElementById('TowatchedList');
+
+            // Clear the previous list of watched movies
+            TowatchedList.innerHTML = '';
+
+            features.forEach(function (feature) {
+                // Check if the movie is marked as watched
+                var details = feature.querySelector('.details');
+                if (details.classList.contains('Towatched')) {
+                    // Extract image and title elements
+                    var img = feature.querySelector('img');
+                    var title = feature.querySelector('.moviename').textContent;
+
+                    // Create a new container div for each watched movie
+                    var TowatchedMovieRow = document.createElement('div');
+                    TowatchedMovieRow.classList.add('Towatched-movie-row');
+
+                    // Append image and title elements to the row
+                    var clonedImg = img.cloneNode(true);
+                    clonedImg.style.width = '200px'; // Apply the width specified in CSS
+                    clonedImg.style.borderRadius = '10px'; // Add border-radius
+                    TowatchedMovieRow.appendChild(clonedImg);
+
+                    // Create and style the movie name element
+                    var movieName = document.createElement('p');
+                    movieName.textContent = title;
+                    movieName.style.color = 'white'; // Set color to white
+                    movieName.style.textAlign = 'center'; // Align center
+                    movieName.style.fontSize = '16px'; // Adjust font size
+                    movieName.style.fontFamily = 'Arial, sans-serif'; // Adjust font family
+                    movieName.style.marginTop = '10px'; // Add margin-top
+                    TowatchedMovieRow.appendChild(movieName);
+                    TowatchedList.appendChild(TowatchedMovieRow);
+                }
+            });
+
+            // Show the watched panel
+            document.getElementById('TowatchedPanel').style.display = 'block';
+        }
+
+
+    function toggleDetails(movieId) {
+        var details = document.getElementById(movieId + '-details');
+        if (details.style.display === 'block') {
+            details.style.display = 'none';
+        } else {
+            var allDetails = document.querySelectorAll('.details');
+            allDetails.forEach(function(detail) {
+                detail.style.display = 'none';
+            });
+            details.style.display = 'block';
+        }
+    }
+
+        function markAsWatched(movieId) {
+            var details = document.getElementById(movieId + '-details');
+            details.classList.add('watched'); // Mark the movie as watched
+
+            // Add the movie title to the watched panel
+            var watchedList = document.getElementById('watchedList');
+            var listItem = document.createElement('li');
+            listItem.textContent = ''; // Remove movie name display
+            watchedList.appendChild(listItem);
+
+            // Show the watched panel
+          //  document.getElementById('watchedPanel').style.display = 'block';
+        }
+
+    function markAsToWatch(movieId) {
+
+            var details = document.getElementById(movieId + '-details');
+            details.classList.add('Towatched'); // Mark the movie as watched
+
+            // Add the movie title to the watched panel
+            var TowatchedList = document.getElementById('TowatchedList');
+            var listItem = document.createElement('li');
+            listItem.textContent = ''; // Remove movie name display
+            TowatchedList.appendChild(listItem);
+           
+    }
+
+    function searchMovie() {
+        var searchInput = document.getElementById('searchInput').value.toLowerCase();
+        var features = document.getElementsByClassName('feature');
+        var movieFound = false;
+
+        for (var i = 0; i < features.length; i++) {
+            var feature = features[i];
+            var moviename = feature.querySelector('.moviename').textContent.toLowerCase();
+            if (moviename.includes(searchInput)) {
+                feature.parentNode.insertBefore(feature, feature.parentNode.firstChild);
+                movieFound = true;
+            }
+        }
+
+        if (!movieFound) {
+            document.getElementById('searchMessage').style.display = 'block';
+        } else {
+            document.getElementById('searchMessage').style.display = 'none';
+        }
+
+        document.getElementById('searchInput').value = '';
+        return false;
+    }
+</script>
+</body>
+</html>
