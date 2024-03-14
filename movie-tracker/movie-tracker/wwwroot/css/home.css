@@ -1,0 +1,27 @@
+﻿body {
+    background-color: #111;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.container h2 {
+    color: #fff;
+}
+
+.container {
+    margin-top: 10vh;
+}
+
+footer a {
+    color: #fff;
+}
+
+h2 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 5vh;
+    color: #e50914;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}

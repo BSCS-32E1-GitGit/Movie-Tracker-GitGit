@@ -1,0 +1,24 @@
+﻿@model movie_tracker.Models.Movie
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title - Movie Details</title>
+    <link href="~/css/Details.css" rel="stylesheet">
+</head>
+<body>
+    <div class="move">
+    <div class="panel">
+        <h2 class="moviename">@Model.Title</h2>
+        <img src="@Model.ImageUrl" alt="@Model.Title Poster" />
+        <p><strong>Release Date:</strong> @Model.ReleaseDate.ToShortDateString()</p>
+        <p><strong>Director:</strong> @Model.Director</p>
+        <p><strong>Genre:</strong> @Model.Genre</p>
+        <p><strong>Cast:</strong> @string.Join(", ", Model.Cast)</p>
+        <p style="font-size: 20px;"><strong></strong> @Model.MovieInfo</p>
+    </div>
+    </div>
+</body>
+</html>

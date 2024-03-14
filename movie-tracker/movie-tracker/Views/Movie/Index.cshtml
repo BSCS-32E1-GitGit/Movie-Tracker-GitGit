@@ -1,0 +1,60 @@
+﻿@model List<movie_tracker.Models.Movie>
+
+<!-- Add Font Awesome CDN link -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="~/css/Movie.css" rel="stylesheet" />
+@{
+    int moviesPerRow = 5; 
+    int totalMovies = Model.Count;
+    int rowCount = (int)Math.Ceiling((double)totalMovies / moviesPerRow); 
+}
+<div class="move">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="search-bar">
+                <form asp-controller="Movie" asp-action="Index" method="get">
+                    <input type="text" class="search-input" name="searchString" placeholder="Search movies, genre">
+                 
+                    <button class="search-button" type="submit">
+                        <i class="fa fa-search" style="font-size:20px"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="netflix-buttons">
+                <a href="@Url.Action("WatchList", "Movie")" class="netflix-button netflix-watched">Watched</i></a>
+                <a href="@Url.Action("ToWatchList", "Movie")" class="netflix-button netflix-to-watch">To Watch</i></a>
+            </div>
+        </div>
+        <div class="movie-grid">
+            @for (int i = 0; i < rowCount; i++)
+            {
+                <div class="row mb-3">
+                    @for (int j = i * moviesPerRow; j < Math.Min((i + 1) * moviesPerRow, totalMovies); j++)
+                    {
+                        <div class="col-lg-2">
+                            <div class="card movie-card">
+                                <img src="@Url.Content(Model[j].ImageUrl)" class="card-img-top" alt="@Model[j].Title">
+                                <div class="card-body">
+                                    <h5 class="card-title">@Model[j].Title</h5>
+                                    <p class="card-text">@Model[j].Genre</p>
+
+                                    <div class="btn-group mt-2" role="group" aria-label="Watch actions">
+                                      
+                                        <a href="@Url.Action("Details", "Movie", new { id = Model[j].Id })" class="btn btn-info rounded-circle"><i class="fa fa-info"></i></a>
+                                        <form method="post" asp-controller="Movie" asp-action="ToWatch" asp-route-id="@Model[j].Id">
+                                            <button type="submit" class="btn btn-info rounded-circle"><i class="fa fa-plus"></i></button>
+                                        </form>
+                                        <form method="post" asp-controller="Movie" asp-action="Watched" asp-route-id="@Model[j].Id">
+                                            <button type="submit" class="btn btn-success rounded-circle"><i class="fa fa-check"></i></button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
