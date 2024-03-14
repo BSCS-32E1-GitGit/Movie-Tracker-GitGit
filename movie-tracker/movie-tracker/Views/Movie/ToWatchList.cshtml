@@ -1,0 +1,31 @@
+﻿@model movie_tracker.Models.WatchListView
+
+@{
+    ViewData["Title"] = "WatchList";
+}
+
+<link href="~/css/watchlist.css" rel="stylesheet">
+<body>
+<h1 class="watchedmovie">To Watch Movie</h1>
+
+<div class="container-fluid">
+    @for (int i = 0; i < Model.WatchList.Count; i += 5)
+    {
+        <div class="row">
+            @for (int j = i; j < Math.Min(i + 5, Model.WatchList.Count); j++)
+            {
+                var movie = Model.WatchList[j];
+                <div class="col-lg-2 mb-3">
+                    <div class="card movie-card">
+                        <img src="@Url.Content(movie.ImageUrl)" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">@movie.Genre</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+</body>

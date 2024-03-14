@@ -1,0 +1,168 @@
+﻿body {
+    overflow-x: hidden;
+}
+
+.movie-grid {
+    background-color: #111;
+    padding: 30px 0;
+    margin-top: 0;
+}
+
+.movie-card {
+    background-color: #1f1f1f;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    margin-top: 0;
+    width: 250px;
+    height: 500px;
+    margin-right: 100vh;
+    margin-bottom: 40px;
+}
+
+    .movie-card:hover {
+        transform: scale(1.05);
+    }
+
+    .movie-card .card-title,
+    .movie-card .card-text {
+        color: #fff;
+    }
+
+    .movie-card .btn-primary {
+        background-color: #e50914;
+        border-color: #e50914;
+    }
+
+        .movie-card .btn-primary:hover {
+            background-color: #c2040b;
+            border-color: #c2040b;
+        }
+
+    .movie-card img {
+        border-radius: 10px 10px 0 0;
+        object-fit: cover;
+        height: 320px;
+    }
+
+    .movie-card .card-body {
+        padding: 1rem;
+    }
+
+    .movie-card .card-title {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .movie-card .card-text {
+        font-size: 0.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+@media (max-width: 768px) {
+    .movie-card {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+        .movie-card img {
+            height: 150px;
+        }
+}
+
+.move {
+    position: absolute;
+    top: 25vh;
+    left: 14vw;
+}
+
+.search-bar {
+    text-align: right;
+    position: absolute;
+    margin-left: -26vw;
+    margin-top: -8vh;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: transparent;
+    color: #fff;
+    font-size: 14px;
+    width: 250px;
+    margin-right: 10px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e50914;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+    .search-button i {
+        font-size: 16px;
+    }
+
+.movie-card {
+    margin-bottom: 20px;
+}
+
+.netflix-buttons {
+    display: flex;
+    position: absolute;
+    left: 58vw;
+    top: -8vh;
+}
+
+.netflix-button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    background-color: #e50914;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+    .netflix-button:hover {
+        opacity: 0.8;
+        color: white;
+    }
+
+.movie-card .btn {
+    padding: 10px;
+    margin-top: 5vh;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    line-height: 20px;
+    margin-right: 10px;
+    margin-left: 18px;
+}
+
+    .movie-card .btn i {
+        font-size: 20px;
+    }
+
+    .movie-card .btn:hover {
+        background-color: #e50914;
+        opacity: 1;
+    }
