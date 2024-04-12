@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using movie_tracker.Models;
+using System.Linq;
 
 namespace movie_tracker.Controllers
 {
@@ -120,7 +121,7 @@ new Movie
 new Movie
 {
     Id = 11,
-    Title = "Ballerina (2023 Film)",
+    Title = "Ballerina",
     Director = "Lee Chung-hyun",
     Cast = new List<string> {"Jeon Jong-seo", "Kim Ji-hoon", "Park Yu-rim", "Park Hyung-soo" },
     Genre = "Action Thriller",
@@ -131,7 +132,7 @@ new Movie
 new Movie
 {
     Id = 12,
-    Title = "Nowhere (2023 Film)",
+    Title = "Nowhere",
     Director = "Albert Pintó",
     Cast = new List<string> {"Anna Castillo", "Miguel Ruiz" },
     Genre = "Thriller/Drama",
@@ -142,7 +143,7 @@ new Movie
 new Movie
 {
     Id = 13,
-    Title = "After Everything (2023 Film)",
+    Title = "After Everything",
     Director = "Castille Landon",
     Cast = new List<string> {"Hero Fiennes Tiffin", "Josephine Langford", "Louise Lombard", "Stephen Moyer", "Mimi Keene" },
     Genre = "Drama Romance",
@@ -175,7 +176,7 @@ new Movie
 new Movie
 {
     Id = 16,
-    Title = "John Wick 4 (2023 Film)",
+    Title = "John Wick 4",
     Director = "Chad Stahelski",
     Cast = new List<string> {"Keanu Reeves", "Laurence Fishburne", "George Georgiou", "Lance Reddick" },
     Genre = "Action, Mystery & Thriller",
@@ -186,7 +187,7 @@ new Movie
 new Movie
 {
     Id = 17,
-    Title = "A Very Good Girl (2023 Film)",
+    Title = "A Very Good Girl",
     Director = "Petersen Vargas",
     Cast = new List<string> {"Dolly De Leon", "Kathryn Bernardo", "Kaori Oinuma", "Jake Ejercito", "Gillian Vicencio", "Chienna Filomeno", "Donna Cariaga" },
     Genre = "Comedy, Drama, Mystery & Thriller",
@@ -208,7 +209,7 @@ new Movie
 new Movie
 {
     Id = 19,
-    Title = "The Nun II (2023 Film)",
+    Title = "The Nun II",
     Director = "Michael Chaves",
     Cast = new List<string> {"Taissa Farmiga", "Anna Popplewell", "Bonnie Aarons", "Storm Reid", "Jonas Bloquet", "Vera Farmiga", "Katelyn Rose Downey" },
     Genre = "Horror, Mystery & Thriller",
@@ -219,7 +220,7 @@ new Movie
 new Movie
 {
     Id = 20,
-    Title = "Fast X (2023 Film)",
+    Title = "Fast X",
     Director = "Louis Laterrier",
     Cast = new List<string> {"Vin Diesel", "Jason Momoa", "Alan Ritchson", "Rita Moreno", "Michelle Rodriguez", "Drie Larson", "Sung Kang" },
     Genre = "Action, Adventure",
@@ -320,7 +321,7 @@ new Movie
     Id = 29,
     Title = "Uncharted (2022)",
     Director = "Ruben Fleischer",
-    Cast = new List<string> {"Tom Holland", "Mark Wahlberg", "Antonio Banderas", "Sophia Ali" },
+    Cast = new List<string> {"Tom Holland", "Mark Wahlberg", "Antonio Banderas", "Sophia Ali", "Matt Smith" },
     Genre = "Action Adventure",
     ReleaseDate = new DateTime(2022, 2, 18),
     MovieInfo = "Two treasure hunters race against time to recover Ferdinand Magellan's 500-year-old lost fortune",
@@ -342,27 +343,55 @@ new Movie
         private static List<Movie> watchList = new List<Movie>();
         private static List<Movie> toWatchList = new List<Movie>();
 
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, string cast)
         {
             var filteredMovies = new List<Movie>(movies);
 
+            // Filter by search string
             if (!String.IsNullOrEmpty(searchString))
             {
-              
-                var searchedMovie = movies.FirstOrDefault(m => m.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) || m.Genre.Contains(searchString, StringComparison.OrdinalIgnoreCase));
+                var searchedMovie = movies.FirstOrDefault(m => m.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) || m.Genre.Contains(searchString, StringComparison.OrdinalIgnoreCase) || m.Cast.Any(actor => actor.Equals(searchString, StringComparison.OrdinalIgnoreCase)));
 
                 if (searchedMovie != null)
                 {
-                  
+                    // Remove the searched movie from its current position
                     filteredMovies.Remove(searchedMovie);
 
-                  
-                    filteredMovies.Insert(0, searchedMovie);
+                    // Find the index of the first movie with the searched cast
+                    int index = filteredMovies.FindIndex(m => m.Cast.Contains(cast, StringComparer.OrdinalIgnoreCase));
+                    if (index != -1)
+                    {
+                        // Insert the searched movie before the first movie with the searched cast
+                        filteredMovies.Insert(index, searchedMovie);
+                    }
+                    else
+                    {
+                        // If the cast is not found, insert the searched movie at the beginning
+                        filteredMovies.Insert(0, searchedMovie);
+                    }
                 }
             }
 
-     
-            if (!String.IsNullOrEmpty(searchString))
+            // Filter by cast
+            if (!String.IsNullOrEmpty(cast))
+            {
+                var moviesWithCast = movies.Where(m => m.Cast.Any(actor => actor.Equals(cast, StringComparison.OrdinalIgnoreCase))).ToList();
+
+                if (moviesWithCast.Any())
+                {
+                    // Remove all movies with the searched cast from their current positions
+                    foreach (var movie in moviesWithCast)
+                    {
+                        filteredMovies.Remove(movie);
+                    }
+
+                    // Insert all movies with the searched cast at the beginning
+                    filteredMovies.InsertRange(0, moviesWithCast);
+                }
+            }
+
+            // Sort by genre if searchString is provided but no cast filter
+            if (!String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(cast))
             {
                 filteredMovies.Sort((x, y) =>
                 {
@@ -383,7 +412,6 @@ new Movie
 
             return View(filteredMovies);
         }
-
         public ActionResult Details(int id)
         {
             var movie = movies.Find(m => m.Id == id);
